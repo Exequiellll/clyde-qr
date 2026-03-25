@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clyde - Social Links</title>
+    <title>Clyde - Premium Shoe Cleaner</title>
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,131 +15,269 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
+            background: radial-gradient(ellipse at top, #0a1628 0%, #000 70%);
             color: #fff;
             padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Animated background particles */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background:
+                radial-gradient(2px 2px at 20% 30%, rgba(59,130,246,0.3), transparent),
+                radial-gradient(2px 2px at 80% 20%, rgba(59,130,246,0.2), transparent),
+                radial-gradient(2px 2px at 40% 70%, rgba(59,130,246,0.15), transparent),
+                radial-gradient(2px 2px at 90% 80%, rgba(59,130,246,0.2), transparent),
+                radial-gradient(2px 2px at 10% 90%, rgba(59,130,246,0.1), transparent),
+                radial-gradient(2px 2px at 60% 50%, rgba(59,130,246,0.2), transparent);
+            animation: twinkle 4s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
 
         .container {
             text-align: center;
-            max-width: 400px;
+            max-width: 420px;
             width: 100%;
+            position: relative;
+            z-index: 1;
+            animation: fadeUp 0.8s ease-out;
         }
 
-        .profile {
-            margin-bottom: 30px;
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .profile h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
+        /* Logo */
+        .logo {
+            margin-bottom: 10px;
         }
 
-        .profile p {
-            color: #aaa;
-            font-size: 0.95rem;
+        .logo img {
+            width: 160px;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3));
         }
 
+        .tagline {
+            color: #64748b;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+        }
+
+        /* Section labels */
+        .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #3b82f6;
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+
+        /* Links */
         .links {
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            margin-bottom: 35px;
+            gap: 12px;
+            margin-bottom: 28px;
         }
 
         .link-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 16px 20px;
-            border-radius: 12px;
+            gap: 14px;
+            padding: 14px 20px;
+            border-radius: 14px;
             text-decoration: none;
             color: #fff;
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transition: left 0.5s;
+        }
+
+        .link-btn:hover::before {
+            left: 100%;
         }
 
         .link-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255,255,255,0.12);
         }
 
-        .link-btn svg {
-            width: 24px;
-            height: 24px;
+        .link-btn .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
         }
 
-        .youtube { background: linear-gradient(135deg, #ff0000, #cc0000); }
-        .tiktok { background: linear-gradient(135deg, #000000, #333); border: 1px solid #444; }
-        .facebook { background: linear-gradient(135deg, #1877f2, #1255a0); }
-        .instagram { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .link-btn svg {
+            width: 22px;
+            height: 22px;
+        }
 
+        .link-btn .text {
+            text-align: left;
+        }
+
+        .link-btn .text span {
+            display: block;
+            font-size: 0.7rem;
+            color: #94a3b8;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        /* Social icon backgrounds */
+        .youtube .icon { background: #ff0000; }
+        .tiktok .icon { background: #000; border: 1px solid #333; }
+        .facebook .icon { background: #1877f2; }
+        .instagram .icon { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .shopee .icon { background: #ee4d2d; }
+        .lazada .icon { background: #0f146d; }
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(59,130,246,0.2), transparent);
+            margin: 8px 0 28px;
+        }
+
+        /* QR Section */
         .qr-section {
             margin-top: 10px;
         }
 
-        .qr-section p {
-            color: #aaa;
-            font-size: 0.85rem;
-            margin-bottom: 12px;
+        .qr-section .section-label {
+            margin-bottom: 16px;
         }
 
         #qrcode {
             display: inline-block;
-            padding: 12px;
+            padding: 10px;
             background: #fff;
-            border-radius: 12px;
+            border-radius: 14px;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.15);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 24px;
+            font-size: 0.7rem;
+            color: #334155;
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="profile">
-            <h1>CLYDE</h1>
-            <p>Premium Shoe Cleaner</p>
+        <!-- Logo -->
+        <div class="logo">
+            <img src="low res CLYDE logo_registered_blue (1).png" alt="Clyde Premium Shoe Cleaner">
         </div>
+        <p class="tagline">Premium Shoe Cleaner</p>
 
+        <!-- Socials -->
+        <p class="section-label">Follow Us</p>
         <div class="links">
             <a href="https://www.youtube.com/@lets_clyde" target="_blank" class="link-btn youtube">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                YouTube
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="#fff"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </div>
+                <div class="text">YouTube <span>@lets_clyde</span></div>
             </a>
             <a href="https://www.tiktok.com/@letsclyde" target="_blank" class="link-btn tiktok">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
-                TikTok
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="#fff"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+                </div>
+                <div class="text">TikTok <span>@letsclyde</span></div>
             </a>
             <a href="https://www.facebook.com/clydepremiumshoecleaner" target="_blank" class="link-btn facebook">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                Facebook
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="#fff"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </div>
+                <div class="text">Facebook <span>Clyde Premium Shoe Cleaner</span></div>
             </a>
             <a href="https://www.instagram.com/lets_clyde/" target="_blank" class="link-btn instagram">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-                Instagram
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                </div>
+                <div class="text">Instagram <span>@lets_clyde</span></div>
             </a>
         </div>
 
+        <div class="divider"></div>
+
+        <!-- Shop Links -->
+        <p class="section-label">Shop Now</p>
+        <div class="links">
+            <a href="https://shopee.ph/clydepremiumshoecleaner?entryPoint=ShopBySearch&searchKeyword=clyde" target="_blank" class="link-btn shopee">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 0C9.8 0 8 1.8 8 4h-.6C5 4 3 6 3 8.4V20c0 2.2 1.8 4 4 4h10c2.2 0 4-1.8 4-4V8.4C21 6 19 4 17.6 4H16c0-2.2-1.8-4-4-4zm0 2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm-1.5 7.5c0 2.5 1.5 3.5 1.5 3.5s1.5-1 1.5-3.5c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5z"/></svg>
+                </div>
+                <div class="text">Shopee <span>Official Store</span></div>
+            </a>
+            <a href="https://www.lazada.com.ph/shop/clyde-premium-shoe-cleaner/?spm=a2o4l.searchlist.card.1.5c067087kFsTRi&path=promotion-439131-0.htm&tab=promotion" target="_blank" class="link-btn lazada">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="#fff"><path d="M4 2l-2 6h2l1-3h2l-1 3h2l1-3h2l-1 3h2l1-3h2l-1 3h2l2-6H4zm-2 8v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V10H2zm7 3h6v2H9v-2z"/></svg>
+                </div>
+                <div class="text">Lazada <span>Official Store</span></div>
+            </a>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- QR Code -->
         <div class="qr-section">
-            <p>Scan to view links</p>
+            <p class="section-label">Scan QR Code</p>
             <div id="qrcode"></div>
         </div>
+
+        <p class="footer">CLYDE PREMIUM SHOE CLEANER</p>
     </div>
 
     <script>
         const pageUrl = "https://exequiellll.github.io/clyde-qr/";
         new QRCode(document.getElementById("qrcode"), {
             text: pageUrl,
-            width: 180,
-            height: 180,
+            width: 160,
+            height: 160,
             colorDark: "#000000",
             colorLight: "#ffffff",
             correctLevel: QRCode.CorrectLevel.H
